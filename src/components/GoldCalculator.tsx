@@ -99,7 +99,7 @@ const GoldCalculator = () => {
           {items.map((item, index) => (
             <Card key={item.id} className="p-6 card-shadow animate-fadeIn">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Item {index + 1}</h3>
+                <h3 className="text-lg font-semibold">Batch {index + 1}</h3>
                 <div className="flex items-center gap-4">
                   <div className="text-lg">
                     Total: ${calculateItemTotal(item).total.toFixed(2)}
@@ -122,7 +122,7 @@ const GoldCalculator = () => {
                       type="number"
                       min="0"
                       step="0.1"
-                      value={item.weight || ''}
+                      value={item.weight === 0 ? '' : item.weight}
                       onChange={(e) => updateItem(item.id, 'weight', e.target.value)}
                       className="mt-1"
                     />
@@ -133,7 +133,7 @@ const GoldCalculator = () => {
                       id={`quantity-${item.id}`}
                       type="number"
                       min="1"
-                      value={item.quantity}
+                      value={item.quantity === 0 ? '' : item.quantity}
                       onChange={(e) => updateItem(item.id, 'quantity', e.target.value)}
                       className="mt-1"
                     />
@@ -145,7 +145,7 @@ const GoldCalculator = () => {
                       type="number"
                       min="0"
                       step="0.01"
-                      value={item.pricePerGram}
+                      value={item.pricePerGram === 0 ? '' : item.pricePerGram}
                       onChange={(e) => updateItem(item.id, 'pricePerGram', e.target.value)}
                       className="mt-1"
                     />
@@ -178,7 +178,7 @@ const GoldCalculator = () => {
                       type="number"
                       min="0"
                       step="0.01"
-                      value={item.taxValue}
+                      value={item.taxValue === 0 ? '' : item.taxValue}
                       onChange={(e) => updateItem(item.id, 'taxValue', e.target.value)}
                       className="mt-1"
                     />
@@ -190,7 +190,7 @@ const GoldCalculator = () => {
                       type="number"
                       min="0"
                       step="0.01"
-                      value={item.providerFee}
+                      value={item.providerFee === 0 ? '' : item.providerFee}
                       onChange={(e) => updateItem(item.id, 'providerFee', e.target.value)}
                       className="mt-1"
                     />
