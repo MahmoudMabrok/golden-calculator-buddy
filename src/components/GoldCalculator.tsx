@@ -62,11 +62,17 @@ const GoldCalculator = () => {
     const tax = item.taxType === 'percentage' 
       ? subtotal * (item.taxValue / 100)
       : item.taxValue;
-    return subtotal + tax;
+    return { subtotal, tax, total: subtotal + tax };
   };
 
   const calculateGrandTotal = () => {
-    return items.reduce((sum, item) => sum + calculateItemTotal(item), 0);
+    return items.reduce((acc, item) => {
+      const { subtotal, tax } = calculateItemTotal(item);
+      return {
+        subtotal: acc.subtotal + subtotal,
+        tax: acc.tax + tax
+      };
+    }, { subtotal: 0, tax: 0 });
   };
 
   return (
@@ -78,8 +84,23 @@ const GoldCalculator = () => {
         </div>
 
         <div className="space-y-6">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <Card key={item.id} className="p-6 card-shadow animate-fadeIn">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Item {index + 1}</h3>
+                <div className="flex items-center gap-4">
+                  <div className="text-lg">
+                    Total: ${calculateItemTotal(item).total.toFixed(2)}
+                  </div>
+                  <Button
+                    variant="destructive"
+                    size="icon"
+                    onClick={() => removeItem(item.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-4">
                   <div>
@@ -151,18 +172,6 @@ const GoldCalculator = () => {
                     />
                   </div>
                 </div>
-                <div className="md:col-span-2 flex justify-between items-center">
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    onClick={() => removeItem(item.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                  <div className="text-lg font-semibold">
-                    Item Total: ${calculateItemTotal(item).toFixed(2)}
-                  </div>
-                </div>
               </div>
             </Card>
           ))}
@@ -176,9 +185,19 @@ const GoldCalculator = () => {
 
           {items.length > 0 && (
             <Card className="p-6 mt-8 card-shadow">
-              <div className="text-xl font-bold flex justify-between items-center">
-                <span>Grand Total:</span>
-                <span>${calculateGrandTotal().toFixed(2)}</span>
+              <div className="space-y-2">
+                <div className="text-xl flex justify-between items-center">
+                  <span>Subtotal:</span>
+                  <span>${calculateGrandTotal().subtotal.toFixed(2)}</span>
+                </div>
+                <div className="text-xl flex justify-between items-center">
+                  <span>Total Tax:</span>
+                  <span>${calculateGrandTotal().tax.toFixed(2)}</span>
+                </div>
+                <div className="text-2xl font-bold flex justify-between items-center pt-2 border-t">
+                  <span>Grand Total:</span>
+                  <span>${(calculateGrandTotal().subtotal + calculateGrandTotal().tax).toFixed(2)}</span>
+                </div>
               </div>
             </Card>
           )}
