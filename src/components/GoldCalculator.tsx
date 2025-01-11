@@ -14,6 +14,7 @@ interface GoldItem {
   pricePerGram: number;
   taxType: 'percentage' | 'fixed';
   taxValue: number;
+  providerFee: number;
 }
 
 const DEFAULT_PRICE_PER_GRAM = 60;
@@ -30,6 +31,7 @@ const GoldCalculator = () => {
       pricePerGram: DEFAULT_PRICE_PER_GRAM,
       taxType: 'percentage',
       taxValue: 0,
+      providerFee: 0,
     };
     setItems([...items, newItem]);
     console.log('Added new item:', newItem);
@@ -58,21 +60,31 @@ const GoldCalculator = () => {
   };
 
   const calculateItemTotal = (item: GoldItem) => {
-    const subtotal = item.weight * item.quantity * item.pricePerGram;
+    const weightTotal = item.weight * item.quantity;
+    const subtotal = weightTotal * item.pricePerGram;
+    
+    // Calculate tax based on total weight
     const tax = item.taxType === 'percentage' 
-      ? subtotal * (item.taxValue / 100)
-      : item.taxValue;
-    return { subtotal, tax, total: subtotal + tax };
+      ? (weightTotal * item.taxValue / 100) * item.pricePerGram // Tax per gram
+      : weightTotal * item.taxValue; // Fixed tax per gram
+    
+    return { 
+      subtotal, 
+      tax, 
+      providerFee: item.providerFee,
+      total: subtotal + tax + item.providerFee 
+    };
   };
 
   const calculateGrandTotal = () => {
     return items.reduce((acc, item) => {
-      const { subtotal, tax } = calculateItemTotal(item);
+      const { subtotal, tax, providerFee } = calculateItemTotal(item);
       return {
         subtotal: acc.subtotal + subtotal,
-        tax: acc.tax + tax
+        tax: acc.tax + tax,
+        providerFee: acc.providerFee + providerFee
       };
-    }, { subtotal: 0, tax: 0 });
+    }, { subtotal: 0, tax: 0, providerFee: 0 });
   };
 
   return (
@@ -80,7 +92,7 @@ const GoldCalculator = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-dark mb-2">Gold Price Calculator</h1>
-          <p className="text-gray-600">Calculate the total price of your gold items including individual tax rates</p>
+          <p className="text-gray-600">Calculate the total price of your gold items including tax per gram and provider fees</p>
         </div>
 
         <div className="space-y-6">
@@ -126,8 +138,6 @@ const GoldCalculator = () => {
                       className="mt-1"
                     />
                   </div>
-                </div>
-                <div className="space-y-4">
                   <div>
                     <Label htmlFor={`price-${item.id}`}>Price per gram ($)</Label>
                     <Input
@@ -140,6 +150,8 @@ const GoldCalculator = () => {
                       className="mt-1"
                     />
                   </div>
+                </div>
+                <div className="space-y-4">
                   <div>
                     <Label>Tax Type</Label>
                     <RadioGroup
@@ -149,17 +161,17 @@ const GoldCalculator = () => {
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="percentage" id={`percentage-${item.id}`} />
-                        <Label htmlFor={`percentage-${item.id}`}>Percentage</Label>
+                        <Label htmlFor={`percentage-${item.id}`}>Percentage per gram</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="fixed" id={`fixed-${item.id}`} />
-                        <Label htmlFor={`fixed-${item.id}`}>Fixed Amount</Label>
+                        <Label htmlFor={`fixed-${item.id}`}>Fixed Amount per gram</Label>
                       </div>
                     </RadioGroup>
                   </div>
                   <div>
                     <Label htmlFor={`tax-${item.id}`}>
-                      {item.taxType === 'percentage' ? 'Tax Percentage (%)' : 'Tax Amount ($)'}
+                      {item.taxType === 'percentage' ? 'Tax Percentage per gram (%)' : 'Tax Amount per gram ($)'}
                     </Label>
                     <Input
                       id={`tax-${item.id}`}
@@ -168,6 +180,18 @@ const GoldCalculator = () => {
                       step="0.01"
                       value={item.taxValue}
                       onChange={(e) => updateItem(item.id, 'taxValue', e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor={`provider-fee-${item.id}`}>Provider Fee ($)</Label>
+                    <Input
+                      id={`provider-fee-${item.id}`}
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={item.providerFee}
+                      onChange={(e) => updateItem(item.id, 'providerFee', e.target.value)}
                       className="mt-1"
                     />
                   </div>
@@ -194,9 +218,13 @@ const GoldCalculator = () => {
                   <span>Total Tax:</span>
                   <span>${calculateGrandTotal().tax.toFixed(2)}</span>
                 </div>
+                <div className="text-xl flex justify-between items-center">
+                  <span>Total Provider Fees:</span>
+                  <span>${calculateGrandTotal().providerFee.toFixed(2)}</span>
+                </div>
                 <div className="text-2xl font-bold flex justify-between items-center pt-2 border-t">
                   <span>Grand Total:</span>
-                  <span>${(calculateGrandTotal().subtotal + calculateGrandTotal().tax).toFixed(2)}</span>
+                  <span>${(calculateGrandTotal().subtotal + calculateGrandTotal().tax + calculateGrandTotal().providerFee).toFixed(2)}</span>
                 </div>
               </div>
             </Card>
