@@ -1,22 +1,36 @@
 {
   "calculator": {
-    "title": "Gold Price Calculator",
-    "subtitle": "Calculate the total price of your gold items including tax per gram and provider fees",
+    "title": "Gold Calculator",
+    "subtitle": "Calculate the value of your gold",
     "batch": "Batch",
     "total": "Total",
-    "addItem": "Add Item",
     "weight": "Weight (grams)",
     "quantity": "Quantity",
-    "pricePerGram": "Price per gram ($)",
+    "pricePerGram": "Price per gram",
     "taxType": "Tax Type",
     "percentagePerGram": "Percentage per gram",
-    "fixedAmountPerGram": "Fixed Amount per gram",
-    "taxPercentage": "Tax Percentage per gram (%)",
-    "taxAmount": "Tax Amount per gram ($)",
-    "providerFee": "Provider Fee ($)",
+    "fixedAmountPerGram": "Fixed amount per gram",
+    "taxPercentage": "Tax Percentage",
+    "taxAmount": "Tax Amount",
+    "providerFee": "Provider Fee",
     "subtotal": "Subtotal",
     "totalTax": "Total Tax",
     "totalProviderFees": "Total Provider Fees",
-    "grandTotal": "Grand Total"
+    "grandTotal": "Grand Total",
+    "addItem": "Add Item"
+  },
+  "goldPrices": {
+    "title": "Gold Prices in Egypt",
+    "checkPrices": "Check Gold Prices",
+    "apiKeyPlaceholder": "Enter your Firecrawl API key",
+    "saveApiKey": "Save API Key",
+    "refresh": "Refresh Prices",
+    "loading": "Loading...",
+    "apiKeySaved": "API Key Saved",
+    "apiKeySavedDesc": "Your API key has been saved successfully",
+    "fetchSuccess": "Prices Updated",
+    "fetchSuccessDesc": "Gold prices have been updated successfully",
+    "fetchError": "Error",
+    "fetchErrorDesc": "Failed to fetch gold prices"
   }
 }
