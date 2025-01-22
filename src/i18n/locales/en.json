@@ -1,0 +1,22 @@
+{
+  "calculator": {
+    "title": "Gold Price Calculator",
+    "subtitle": "Calculate the total price of your gold items including tax per gram and provider fees",
+    "batch": "Batch",
+    "total": "Total",
+    "addItem": "Add Item",
+    "weight": "Weight (grams)",
+    "quantity": "Quantity",
+    "pricePerGram": "Price per gram ($)",
+    "taxType": "Tax Type",
+    "percentagePerGram": "Percentage per gram",
+    "fixedAmountPerGram": "Fixed Amount per gram",
+    "taxPercentage": "Tax Percentage per gram (%)",
+    "taxAmount": "Tax Amount per gram ($)",
+    "providerFee": "Provider Fee ($)",
+    "subtotal": "Subtotal",
+    "totalTax": "Total Tax",
+    "totalProviderFees": "Total Provider Fees",
+    "grandTotal": "Grand Total"
+  }
+}
