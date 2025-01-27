@@ -210,9 +210,9 @@ const GoldCalculator = () => {
 
           <Button
             onClick={addItem}
-            className="w-full gold-gradient text-white hover:opacity-90 transition-opacity"
+            className="w-full gold-gradient text-dark font-semibold shadow-lg hover:opacity-90 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] rounded-xl py-6"
           >
-            <Plus className="mr-2 h-4 w-4" /> {t('calculator.addItem')}
+            <Plus className="mr-2 h-5 w-5" /> {t('calculator.addItem')}
           </Button>
 
           {items.length > 0 && (
