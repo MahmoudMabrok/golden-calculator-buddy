@@ -8,7 +8,6 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/components/ui/use-toast';
 import LanguageToggle from './LanguageToggle';
-import { GoldPriceDialog } from './GoldPriceDialog';
 
 interface GoldItem {
   id: string;
@@ -92,13 +91,12 @@ const GoldCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cream p-6 animate-fadeIn">
+    <div className="min-h-screen bg-background p-6 animate-fadeIn">
       <LanguageToggle />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-dark mb-2">{t('calculator.title')}</h1>
-          <p className="text-gray-600">{t('calculator.subtitle')}</p>
-          <GoldPriceDialog />
+          <h1 className="text-4xl font-bold text-foreground mb-2">{t('calculator.title')}</h1>
+          <p className="text-muted-foreground">{t('calculator.subtitle')}</p>
         </div>
 
         <div className="space-y-6">
