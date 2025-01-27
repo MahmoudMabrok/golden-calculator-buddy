@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/components/ui/use-toast';
 import LanguageToggle from './LanguageToggle';
+import { DarkModeToggle } from './DarkModeToggle';
 
 interface GoldItem {
   id: string;
@@ -92,7 +93,10 @@ const GoldCalculator = () => {
 
   return (
     <div className="min-h-screen bg-background p-6 animate-fadeIn">
-      <LanguageToggle />
+      <div className="flex justify-between items-center mb-6">
+        <LanguageToggle />
+        <DarkModeToggle />
+      </div>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">{t('calculator.title')}</h1>
