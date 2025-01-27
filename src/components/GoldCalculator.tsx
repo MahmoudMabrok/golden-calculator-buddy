@@ -93,7 +93,7 @@ const GoldCalculator = () => {
 
   return (
     <div className="min-h-screen bg-background p-6 animate-fadeIn">
-      <div className="flex justify-between items-center mb-6">
+      <div className="fixed top-4 right-4 flex items-center gap-2 z-50">
         <LanguageToggle />
         <DarkModeToggle />
       </div>
